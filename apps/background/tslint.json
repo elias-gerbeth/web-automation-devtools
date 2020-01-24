@@ -1,0 +1,17 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "arbitrageFulfillmentCrx",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "arbitrage-fulfillment-crx",
+      "kebab-case"
+    ]
+  }
+}

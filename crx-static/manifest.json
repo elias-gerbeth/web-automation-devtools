@@ -1,34 +1,32 @@
 {
-  "name": "***DEV*** High Ticket Niche research Tools",
-  "short_name": "HTDS Niche Research Tools",
+  "name": "OAGenius Fulfillment Tool",
+  "short_name": "OAGenius Fulfillment Tool",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "HTDS Tools helps you do niche research on Shopify stores.",
+  "description": "OAGenius Fulfillment Tool",
   "icons": {
-    "16": "icons/icon.png",
-    "48": "icons/icon.png",
-    "128": "icons/icon.png"
+    "16": "img/logo.png",
+    "48": "img/logo.png",
+    "128": "img/logo.png"
   },
   "background": {
-    "page": "crx-background/index.html",
+    "page": "background/index.html",
     "persistent": true
   },
   "browser_action": {
-    "default_icon": "icons/icon.png",
-    "default_title": "HTDS Spider"
+    "default_icon": "img/logo.png",
+    "default_title": "OAGenius Fulfillment"
   },
   "permissions": [
-    "https://trends.google.com/*",
-    "https://www.google.com/search*",
-    "https://www.alexa.com/minisiteinfo*",
-    "https://*.myshopify.com/*",
+    "https://app.oagenius.com/*",
+    "https://*.walmart.com/*",
     "activeTab",
     "storage",
     "contextMenus",
     "unlimitedStorage",
     "webRequest", "webRequestBlocking"
   ],
-  "content_security_policy": "script-src 'self' https://kit.fontawesome.com 'unsafe-eval'; object-src 'self'",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "web_accessible_resources": [
     "img/*",
     "js/*"

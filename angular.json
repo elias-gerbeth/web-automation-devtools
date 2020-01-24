@@ -9,9 +9,9 @@
       "prefix": "arbitrage-fulfillment-crx",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "dist/apps/frontend",
+            "outputPath": "dist/crx/frontend",
             "index": "apps/frontend/src/index.html",
             "main": "apps/frontend/src/main.ts",
             "polyfills": "apps/frontend/src/polyfills.ts",
@@ -19,9 +19,17 @@
             "aot": false,
             "assets": [
               "apps/frontend/src/favicon.ico",
-              "apps/frontend/src/assets"
+              "apps/frontend/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
-            "styles": ["apps/frontend/src/styles.css"],
+            "styles": [
+              "apps/frontend/src/styles.scss",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -57,7 +65,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
             "browserTarget": "frontend:build"
           },
@@ -84,7 +92,7 @@
           }
         },
         "test": {
-          "builder": "@nrwl/jest:jest",
+          "builder": "ngx-build-plus:karma",
           "options": {
             "jestConfig": "apps/frontend/jest.config.js",
             "tsConfig": "apps/frontend/tsconfig.spec.json",
@@ -119,6 +127,237 @@
           }
         }
       }
+    },
+    "background": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/background",
+      "sourceRoot": "apps/background/src",
+      "prefix": "arbitrage-fulfillment-crx",
+      "architect": {
+        "build": {
+          "builder": "ngx-build-plus:browser",
+          "options": {
+            "outputPath": "dist/crx/background",
+            "index": "apps/background/src/index.html",
+            "main": "apps/background/src/main.ts",
+            "polyfills": "apps/background/src/polyfills.ts",
+            "tsConfig": "apps/background/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/background/src/favicon.ico",
+              "apps/background/src/assets"
+            ],
+            "styles": ["apps/background/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/background/src/environments/environment.ts",
+                  "with": "apps/background/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "ngx-build-plus:dev-server",
+          "options": {
+            "browserTarget": "background:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "background:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "background:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/background/tsconfig.app.json",
+              "apps/background/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/background/**"]
+          }
+        },
+        "test": {
+          "builder": "ngx-build-plus:karma",
+          "options": {
+            "jestConfig": "apps/background/jest.config.js",
+            "tsConfig": "apps/background/tsconfig.spec.json",
+            "setupFile": "apps/background/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "background-e2e": {
+      "root": "apps/background-e2e",
+      "sourceRoot": "apps/background-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/background-e2e/cypress.json",
+            "tsConfig": "apps/background-e2e/tsconfig.e2e.json",
+            "devServerTarget": "background:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "background:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/background-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/background-e2e/**"]
+          }
+        }
+      }
+    },
+    "crx-messaging": {
+      "projectType": "library",
+      "root": "libs/crx-messaging",
+      "sourceRoot": "libs/crx-messaging/src",
+      "prefix": "arbitrage-fulfillment-crx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/crx-messaging/tsconfig.lib.json",
+              "libs/crx-messaging/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/crx-messaging/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/crx-messaging/jest.config.js",
+            "tsConfig": "libs/crx-messaging/tsconfig.spec.json",
+            "setupFile": "libs/crx-messaging/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "shared-state": {
+      "projectType": "library",
+      "root": "libs/shared/state",
+      "sourceRoot": "libs/shared/state/src",
+      "prefix": "arbitrage-fulfillment-crx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared/state/tsconfig.lib.json",
+              "libs/shared/state/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared/state/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/state/jest.config.js",
+            "tsConfig": "libs/shared/state/tsconfig.spec.json",
+            "setupFile": "libs/shared/state/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "shared-interfaces": {
+      "projectType": "library",
+      "root": "libs/shared/interfaces",
+      "sourceRoot": "libs/shared/interfaces/src",
+      "prefix": "arbitrage-fulfillment-crx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/shared/interfaces/tsconfig.lib.json",
+              "libs/shared/interfaces/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared/interfaces/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/interfaces/jest.config.js",
+            "tsConfig": "libs/shared/interfaces/tsconfig.spec.json",
+            "setupFile": "libs/shared/interfaces/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
+    },
+    "backend-walmart": {
+      "projectType": "library",
+      "root": "libs/backend/walmart",
+      "sourceRoot": "libs/backend/walmart/src",
+      "prefix": "arbitrage-fulfillment-crx",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/backend/walmart/tsconfig.lib.json",
+              "libs/backend/walmart/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/backend/walmart/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/backend/walmart/jest.config.js",
+            "tsConfig": "libs/backend/walmart/tsconfig.spec.json",
+            "setupFile": "libs/backend/walmart/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {

@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { LoadSettingsAction } from './+state/app.actions';
 
 @Component({
-  selector: 'arbitrage-fulfillment-crx-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'frontend';
+    isCollapsed = false;
+
+    constructor(
+        // private store: Store,
+    ) {
+        // this.store.dispatch(LoadSettingsAction);
+    }
 }

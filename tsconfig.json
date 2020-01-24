@@ -15,7 +15,17 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@crx-messaging": ["libs/crx-messaging/src/index.ts"],
+      "@environment": ["environment/environment.ts"],
+      "@arbitrage-fulfillment-crx/shared/state": [
+        "libs/shared/state/src/index.ts"
+      ],
+      "@shared/interfaces": ["libs/shared/interfaces/src/index.ts"],
+      "@arbitrage-fulfillment-crx/backend/walmart": [
+        "libs/backend/walmart/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

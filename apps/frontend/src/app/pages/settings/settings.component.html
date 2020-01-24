@@ -1,0 +1,24 @@
+<h2>Settings</h2>
+<hr>
+<form nz-form [formGroup]="form" (ngSubmit)="saveSettings()" nzLayout="horizontal">
+    <h3>Walmart login</h3>
+    <nz-form-item>
+        <nz-form-label nzFor="walmartLogin">Walmart Login Email</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter your email for walmart login">
+            <nz-input-group nzCompact>
+                <input nz-input formControlName="walmartLogin" id="walmartLogin" name="walmartLogin"
+                    placeholder="john.doe@email.com">
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label nzFor="walmartPassword">Walmart Password</nz-form-label>
+        <nz-form-control nzErrorTip="Please enter your password for walmart login">
+            <nz-input-group nzCompact>
+                <input nz-input type="password" formControlName="walmartPassword" id="walmartPassword" name="walmartPassword"
+                    placeholder="4sgf86sdf8&%">
+            </nz-input-group>
+        </nz-form-control>
+    </nz-form-item>
+    <button [nzLoading]="saving" nz-button nzBlock="true" nzType="primary">Save</button>
+</form>

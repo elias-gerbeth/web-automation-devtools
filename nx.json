@@ -17,6 +17,25 @@
     "frontend-e2e": {
       "tags": [],
       "implicitDependencies": ["frontend"]
+    },
+    "background": {
+      "tags": []
+    },
+    "background-e2e": {
+      "tags": [],
+      "implicitDependencies": ["background"]
+    },
+    "crx-messaging": {
+      "tags": []
+    },
+    "shared-state": {
+      "tags": []
+    },
+    "shared-interfaces": {
+      "tags": []
+    },
+    "backend-walmart": {
+      "tags": []
     }
   }
 }
