@@ -1,0 +1,8 @@
+<h3>Requests</h3>
+<button nz-button (click)="clear()">Clear</button>
+<ul nz-list [nzDataSource]="requests" nzBordered [nzRenderItem]="item">
+    <ng-template #item let-item>
+        <li nz-list-item [nzActions]="[opAction]" [nzContent]="item.title" nzNoFlex></li>
+        <ng-template #opAction><a (click)="log(item)">Debug in Console</a></ng-template>
+    </ng-template>
+</ul>

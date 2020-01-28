@@ -1,5 +1,5 @@
 {
-  "name": "arbitrage-fulfillment-crx",
+  "name": "web-automation-devtools",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
-    "crx:frontend": "ng build --project frontend --watch --base-href /frontend/ --plugin ~crx-app.template.webpack.plugin.js",
+    "crx:devtools": "ng build --project dev-tools --watch --base-href /dev-tools/ --plugin ~crx-app.template.webpack.plugin.js",
     "crx:background": "ng build --project background --watch --plugin ~crx-background.webpack.plugin.js",
     "affected:apps": "nx affected:apps",
     "affected:libs": "nx affected:libs",
@@ -32,6 +32,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.2.0",
+    "@angular/cdk": "^8.2.3",
     "@angular/common": "^8.2.0",
     "@angular/compiler": "^8.2.0",
     "@angular/core": "^8.2.0",
@@ -44,12 +45,15 @@
     "@ngxs/logger-plugin": "^3.6.1",
     "@ngxs/store": "^3.6.1",
     "@nrwl/angular": "8.11.2",
+    "chrome-extension-async": "^3.4.1",
+    "copy-text-to-clipboard": "^2.1.1",
     "core-js": "^2.5.4",
     "jquery": "^3.4.1",
     "ncp": "^2.0.0",
     "ng-zorro-antd": "^8.5.2",
     "ngx-build-plus": "^9.0.2",
     "rxjs": "~6.4.0",
+    "uuid": "^3.4.0",
     "zone.js": "^0.9.1"
   },
   "devDependencies": {
@@ -61,9 +65,10 @@
     "@nrwl/jest": "8.11.2",
     "@nrwl/workspace": "8.11.2",
     "@types/chrome": "0.0.92",
-    "@types/jest": "24.0.9",
+    "@types/jest": "^24.0.9",
     "@types/jquery": "^3.3.31",
     "@types/node": "~8.9.4",
+    "@types/uuid": "^3.4.6",
     "codelyzer": "~5.0.1",
     "cypress": "3.6.1",
     "dotenv": "6.2.0",

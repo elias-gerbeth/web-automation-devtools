@@ -1,0 +1,33 @@
+<nz-layout class="app-layout">
+    <nz-header>
+        <div class="app-header">
+            <div class="logo"></div>
+            <ul nz-menu nzMode="horizontal" nzTheme="dark">
+                <li nz-menu-item nzSelected>
+                    <a [routerLink]="['requests']">
+                        <i nz-icon nzType="interaction" nzTheme="outline"></i>
+                        <span>Requests debugger</span>
+                    </a>
+                </li>
+                <li nz-menu-item>
+                    <a [routerLink]="['tabs']">
+                        <i nz-icon nzType="play-square" nzTheme="outline"></i>
+                        <span>Tab Automation</span>
+                    </a>
+                </li>
+                <li nz-menu-item>
+                    <a href="https://github.com/elias-gerbeth/web-automation-devtools" target="_blank"
+                        rel="noopener noreferrer">
+                        <i nz-icon nzType="github" nzTheme="outline"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nz-header>
+    <nz-content>
+        <div class="inner-content">
+            <router-outlet></router-outlet>
+        </div>
+    </nz-content>
+    <!-- <nz-footer>Web automation dev tools ©2020 by EliasGerbeth</nz-footer> -->
+</nz-layout>

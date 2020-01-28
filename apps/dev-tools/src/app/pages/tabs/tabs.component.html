@@ -1,0 +1,108 @@
+<h3>Automate a tab.</h3>
+
+<!-- <form nz-form nzLayout="inline">
+    <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="email">Url for the new tab</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+            <input nz-input [(ngModel)]="url" id="url" name="url" placeholder="https://my-site.com" />
+        </nz-form-control>
+        <button nz-button (click)="openTab()">{{tab ? 'Go to Url' : 'Open Tab'}}</button>
+        <button nz-button (click)="closeTab()" [disabled]="!tab">Close Tab</button>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="selectorClick">Selector to click</nz-form-label>
+        <input nz-input [(ngModel)]="selectorClick" id="selectorClick" name="selectorClick" placeholder="#myButton" />
+        <button nz-button (click)="clickSelector()">Click selector</button>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="inputSelector">Selector for input:</nz-form-label>
+        <input nz-input [(ngModel)]="inputSelector" id="inputSelector" name="inputSelector" />
+        <nz-form-label [nzSpan]="6" nzFor="inputValue">Input the following text:</nz-form-label>
+        <input nz-input [(ngModel)]="inputValue" id="inputValue" name="inputValue" />
+        <button nz-button (click)="fillInput()">Fill input</button>
+    </nz-form-item>
+</form> -->
+
+<button nz-button nz-dropdown [nzDropdownMenu]="actionMenu" [disabled]="running">
+    <i nz-icon type="plus"></i>
+    <span>Add Action</span>
+</button>
+<nz-dropdown-menu #actionMenu="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item *ngFor="let actionType of actionTypes" (click)="addActionDropdownClick(actionType)">
+            {{actionType}}</li>
+    </ul>
+</nz-dropdown-menu>
+<button nz-button nz-popconfirm nzPopconfirmTitle="Are you sure delete clear all actions?"
+    nzPopconfirmPlacement="bottom" (nzOnConfirm)="clear()" [disabled]="running">
+    <i nz-icon type="delete"></i>
+    <span>Clear Actions</span>
+</button>
+<button nz-button nzType="primary" (click)="run()" [nzLoading]="running">
+    <i nz-icon type="play-circle"></i>
+    <span>Run action sequence</span>
+</button>
+<button nz-button nzType="dashed" (click)="togglePause()" [disabled]="!running">
+    <i nz-icon *ngIf="paused" type="play-circle"></i>
+    <i nz-icon *ngIf="!paused" type="pause"></i>
+</button>
+<button nz-button nzType="default" (click)="stopRunning()" [disabled]="!running">
+    <i nz-icon type="stop"></i>
+</button>
+<button nz-button nzType="success" (click)="export()" [disabled]="running">
+    <i nz-icon type="download"></i>
+</button>
+
+<h3>Actions Sequence:</h3>
+
+<nz-table [nzData]="actions" [nzFrontPagination]="false" [nzShowPagination]="false">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Type</th>
+            <th>Data</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+        <tr *ngFor="let action of actions" cdkDrag>
+            <td><i class="drag-handle" nz-icon nzType="drag" cdkDragHandle></i></td>
+            <td><b>{{ action.type }}</b></td>
+            <td>
+                <span *ngIf="action.url"> <i>{{action.url}}</i> </span>
+                <span *ngIf="action.selector && action.text">
+                    Selector: <i>"{{action.selector}}"</i>
+                    Text: <i>"{{action.text}}"</i>
+                </span>
+                <span *ngIf="action.selector && !action.text"> <i>{{action.selector}}</i> </span>
+                <span *ngIf="action.text && !action.selector"> <i>{{action.text}}</i> </span>
+            </td>
+            <td>
+                <button nz-button (click)="deleteAction(action)">
+                    <i nz-icon nzType="delete" nzTheme="outline"></i>
+                </button>
+                <button nz-button (click)="edit(action)"
+                    [disabled]="action.type === tabActionType.WaitForURLNavigation || action.type === tabActionType.Close">
+                    <i nz-icon nzType="edit" nzTheme="outline"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>
+
+<!-- <nz-list [nzDataSource]="actions" nzBordered [nzRenderItem]="actionItem" cdkDropList
+    (cdkDropListDropped)="drop($event)">
+    <ng-template #actionItem let-item>
+        <nz-list-item cdkDrag>
+            <nz-list-item-meta [nzTitle]="itemTitle" [nzDescription]="item | json"></nz-list-item-meta>
+            <ng-template #itemTitle>
+                <i nz-icon nzType="drag" nzTheme="outline" cdkDragHandle></i>
+                <span>{{item.title}}</span>
+            </ng-template>
+        </nz-list-item>
+    </ng-template>
+</nz-list> -->
+
+<web-automation-dev-tools-modal-form [visible]="isAddActionModalVisible" (onOk)="addAction($event)"
+    (onCancel)="cancelModal()" [items]="addModalItems">
+</web-automation-dev-tools-modal-form>

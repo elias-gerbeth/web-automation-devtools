@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CrxMessageServiceBackground, CrxRequestType } from '@crx-messaging';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'web-automation-dev-tools-root',
@@ -7,8 +7,5 @@ import { CrxMessageServiceBackground, CrxRequestType } from '@crx-messaging';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-    constructor(
-        private crx: CrxMessageServiceBackground,
-    ) {
-    }
+    isCollapsed = false;
 }

@@ -1,3 +1,4 @@
+///<reference types="chrome"/>
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
@@ -12,9 +13,9 @@ platformBrowserDynamic()
     .bootstrapModule(AppModule)
     .catch(err => console.error(err));
 
-chrome.browserAction.onClicked.addListener(() => {
-    chrome.tabs.create({ url: chrome.extension.getURL('frontend/index.html') });
-});
+// chrome.browserAction.onClicked.addListener(() => {
+//     chrome.tabs.create({ url: chrome.extension.getURL('frontend/index.html') });
+// });
 
 
 const filter: chrome.webRequest.RequestFilter = {
@@ -38,3 +39,10 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             });
         return { requestHeaders: details.requestHeaders };
     }, filter, opt_extraInfoSpec);
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    if (msg.type === 'onRequestFinished') {
+        console.log('onRequestFinished: ', { req: msg.request, content: msg.content });
+        // TODO: Log and store them somewhere more useful, add features, extract this into a separate crx
+    }
+});

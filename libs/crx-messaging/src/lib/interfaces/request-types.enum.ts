@@ -3,6 +3,7 @@ export enum CrxRequestType {
     saveSettings = 'saveSettings',
 
     // Walmart
+    walmartPurchaseItems = 'walmartPurchaseItems',
     walmartATC = 'walmartATC',
     walmartLogin = 'walmartLogin',
     walmartSetShipAddress = 'walmartSetShipAddress',

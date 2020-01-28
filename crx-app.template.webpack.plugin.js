@@ -1,4 +1,4 @@
-const sourceFolder = 'frontend';
+const sourceFolder = 'dev-tools';
 const addHotReload = false;
 const copyStaticFiles = false;
 

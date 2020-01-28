@@ -1,9 +1,9 @@
 {
-  "name": "OAGenius Fulfillment Tool",
-  "short_name": "OAGenius Fulfillment Tool",
+  "name": "Web automation Dev-tools",
+  "short_name": "Web automation Dev-tools",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "OAGenius Fulfillment Tool",
+  "description": "Web automation Dev-tools",
   "icons": {
     "16": "img/logo.png",
     "48": "img/logo.png",
@@ -13,13 +13,9 @@
     "page": "background/index.html",
     "persistent": true
   },
-  "browser_action": {
-    "default_icon": "img/logo.png",
-    "default_title": "OAGenius Fulfillment"
-  },
+  "devtools_page": "dev-tools-init/dev-tools.html",
   "permissions": [
-    "https://app.oagenius.com/*",
-    "https://*.walmart.com/*",
+    "<all_urls>",
     "activeTab",
     "storage",
     "contextMenus",

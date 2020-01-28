@@ -1,5 +1,5 @@
 {
-  "npmScope": "arbitrage-fulfillment-crx",
+  "npmScope": "web-automation-dev-tools",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": {
@@ -11,13 +11,6 @@
     "nx.json": "*"
   },
   "projects": {
-    "frontend": {
-      "tags": []
-    },
-    "frontend-e2e": {
-      "tags": [],
-      "implicitDependencies": ["frontend"]
-    },
     "background": {
       "tags": []
     },
@@ -28,13 +21,24 @@
     "crx-messaging": {
       "tags": []
     },
-    "shared-state": {
-      "tags": []
-    },
     "shared-interfaces": {
       "tags": []
     },
-    "backend-walmart": {
+    "dev-tools": {
+      "tags": []
+    },
+    "dev-tools-e2e": {
+      "tags": [],
+      "implicitDependencies": ["dev-tools"]
+    },
+    "dev-tools-background": {
+      "tags": []
+    },
+    "dev-tools-background-e2e": {
+      "tags": [],
+      "implicitDependencies": ["dev-tools-background"]
+    },
+    "crx-tab-automation": {
       "tags": []
     }
   }

@@ -10,7 +10,7 @@
     "component-selector": [
       true,
       "element",
-      "arbitrage-fulfillment-crx",
+      "web-automation-dev-tools",
       "kebab-case"
     ]
   }
