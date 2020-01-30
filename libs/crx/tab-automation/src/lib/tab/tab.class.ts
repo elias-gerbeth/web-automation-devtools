@@ -39,6 +39,12 @@ export class ChromeTab {
         return tab;
     }
 
+    public static async selectCurrentTab() {
+        const tab = new ChromeTab();
+        await tab.selectCurrentSelectedTab();
+        return tab;
+    }
+
     public async close() {
         await new Promise(r => chrome.tabs.remove(this.tabId, r));
     }
@@ -151,5 +157,13 @@ export class ChromeTab {
 
     private async getTabProps(): Promise<chrome.tabs.Tab> {
         return await new Promise<chrome.tabs.Tab>(r => chrome.tabs.get(this.tabId, r));
+    }
+
+    private async selectCurrentSelectedTab() {
+        const tabs = await new Promise<chrome.tabs.Tab[]>(r => chrome.tabs.query({ active: true, currentWindow: true }, r));
+        if (!tabs || tabs.length <= 0) {
+            throw new Error('Current Tab id not found! Is it a chrome tab or something?');
+        }
+        this.tabId = tabs[0].id;
     }
 }

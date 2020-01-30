@@ -1,8 +1,11 @@
-<nz-modal [(nzVisible)]="visible" [nzTitle]="title" (nzOnOk)="ok()" (nzOnCancel)="cancel()">
+<nz-modal [(nzVisible)]="visible" [nzTitle]="title" (nzOnOk)="ok()" (nzOnCancel)="cancel()" [nzFooter]="modalFooter">
     <nz-form-item *ngFor="let item of items">
         <nz-form-label *ngIf="item.label" [nzFor]="item.name" nzSpan="1-24">{{item.label}}</nz-form-label>
         <nz-form-control>
-            <input nz-input [(ngModel)]="item.value" [id]="item.name" [placeholder]="item.placeholder" />
+            <input autofocus nz-input [(ngModel)]="item.value" [id]="item.name" [placeholder]="item.placeholder" />
         </nz-form-control>
     </nz-form-item>
+    <ng-template #modalFooter>
+        <button nz-button nzType="primary" (click)="ok()">Add Action</button>
+    </ng-template>
 </nz-modal>

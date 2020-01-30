@@ -24,9 +24,17 @@ export class TabsComponent implements OnInit {
     running = false;
     paused = false;
 
-    actions: TabAction[] = [];
+    private _actions: TabAction[] = [];
+    get actions() {
+        return this._actions;
+    }
+    set actions(actions: TabAction[]) {
+        this._actions = actions;
+        localStorage.setItem('tabActions', JSON.stringify(actions));
+    }
+
     actionTypes = [
-        TabActionType.OpenURL,
+        TabActionType.NavigateToURL,
         TabActionType.Close,
         TabActionType.ClickSelector,
         TabActionType.FillInputAtSelector,
@@ -42,7 +50,12 @@ export class TabsComponent implements OnInit {
 
     constructor(
         private msg: NzMessageService,
-    ) { }
+    ) {
+        const actionsFromCache = localStorage.getItem('tabActions');
+        if (actionsFromCache) {
+            this.actions = JSON.parse(actionsFromCache);
+        }
+    }
 
     ngOnInit() {
     }
@@ -91,7 +104,7 @@ export class TabsComponent implements OnInit {
             case TabActionType.ClickSelector:
                 this.addModalItems.push({ label: 'Selector to click', name: 'selector', type: 'selector', value: this.editingAction ? this.editingAction.selector : '' } as ModalFormItem);
                 break;
-            case TabActionType.OpenURL:
+            case TabActionType.NavigateToURL:
                 this.addModalItems.push({ label: 'Url to open', name: 'url', type: 'text', value: this.editingAction ? this.editingAction.url : 'https://walmart.com' } as ModalFormItem);
                 break;
             case TabActionType.FillInputAtSelector:
@@ -152,11 +165,23 @@ export class TabsComponent implements OnInit {
     async run() {
         this.running = true;
         this.paused = false;
-        this.runner = new TabActionRunner(this.actions);
+        this.runner = new TabActionRunner(this.actions, { currentTab: true });
         this.msg.success('Running..');
         await this.runner.run();
+        // Clean up
+        this.runner = null;
         this.running = false;
         this.msg.success('Run Completed');
+    }
+
+    async runSingleAction(action: TabAction) {
+        const actionClass = this.actions.find(a => a.id === action.id);
+        const runner = new TabActionRunner([actionClass], { currentTab: true });
+        this.running = true;
+        await runner.run();
+        this.running = false;
+        this.msg.success('Single action ' + action.type + ' completed');
+
     }
 
     togglePause() {

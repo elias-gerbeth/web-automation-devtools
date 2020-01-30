@@ -85,6 +85,9 @@
                     [disabled]="action.type === tabActionType.WaitForURLNavigation || action.type === tabActionType.Close">
                     <i nz-icon nzType="edit" nzTheme="outline"></i>
                 </button>
+                <button nz-button (click)="runSingleAction(action)" [disabled]="running">
+                    <i nz-icon nzType="play-square" nzTheme="outline"></i>
+                </button>
             </td>
         </tr>
     </tbody>

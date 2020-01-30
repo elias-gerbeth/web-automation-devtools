@@ -2,7 +2,7 @@ import { ChromeTab } from '../tab/tab.class';
 import { v1 as uuidv1 } from 'uuid';
 
 export enum TabActionType {
-    OpenURL = 'OpenURL',
+    NavigateToURL = 'NavigateToURL',
     Close = 'Close',
     ClickSelector = 'ClickSelector',
     FillInputAtSelector = 'FillInputAtSelector',
@@ -24,8 +24,8 @@ export abstract class TabAction {
     }
 }
 
-export class TabActionOpenURL extends TabAction {
-    readonly type = TabActionType.OpenURL;
+export class TabActionNavigateToURL extends TabAction {
+    readonly type = TabActionType.NavigateToURL;
     constructor(private url: string) { super(); }
     async run(tab: ChromeTab) {
         return await tab.navigateToAndWaitForLoad(this.url);
@@ -75,8 +75,8 @@ export function deserializeTabAction(json: any) {
         throw new Error('action to deserialize had no type');
     }
     switch (json.type) {
-        case TabActionType.OpenURL:
-            return new TabActionOpenURL(json.url);
+        case TabActionType.NavigateToURL:
+            return new TabActionNavigateToURL(json.url);
         case TabActionType.Close:
             return new TabActionClose();
         case TabActionType.FillInputAtSelector:

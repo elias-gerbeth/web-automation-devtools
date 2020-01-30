@@ -1,6 +1,10 @@
 import { TabAction } from './action.class';
 import { ChromeTab } from '../tab/tab.class';
 
+export interface TabActionRunnerOptions {
+    currentTab?: boolean;
+}
+
 export class TabActionRunner {
 
     private isPaused = false;
@@ -8,11 +12,19 @@ export class TabActionRunner {
 
     constructor(
         private actions: TabAction[],
+        private options: TabActionRunnerOptions,
     ) { }
 
     public async run() {
         console.log('CREATE TAB AND AWAIT LOADING: ');
-        const tab = await ChromeTab.createEmptyBackgroundTab();
+        let tab: ChromeTab;
+        if (this.options.currentTab) {
+            tab = await ChromeTab.selectCurrentTab();
+            console.log('RUNNING IN CURRENT TAB');
+        } else {
+            console.log('RUNNING IN NEW BACKGROUND TAB');
+            tab = await ChromeTab.createEmptyBackgroundTab();
+        }
         console.log('TAB CREATED! TAB ID:', tab.getTabId());
         for (const action of this.actions) {
             console.log('RUN ACTION: ', action.toJson());
